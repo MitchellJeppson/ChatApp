@@ -43,7 +43,7 @@ public class ChatGUIController {
 	Thread t = new Thread() {
 		public void run() {
 
-			splitPane.lookupAll(".split-pane-divider").stream()
+			splitPane.lookupAll(".split-pane-divider").stream()//So user cannot move divider between chat screen and user list.
             .forEach(div ->  div.setMouseTransparent(true) );
 			while (true) {
 				try {
@@ -51,7 +51,7 @@ public class ChatGUIController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Platform.runLater(new Runnable() {
+				Platform.runLater(new Runnable() { //Something weird with javafx applications that have to run in main thread, this fixes it.
 					@Override
 					public void run() {
 						System.out.println(line);
@@ -93,13 +93,13 @@ public class ChatGUIController {
 	};
 	
 
-	
 	@FXML
 	void sendButtonClicked(ActionEvent event) {
 		out.println(textBox.getText());
 		textBox.clear();
 	}
 
+	
 	@FXML
 	void keyboardInput(KeyEvent e){
 		if(e.getCode().equals(KeyCode.ENTER)) {
@@ -108,9 +108,9 @@ public class ChatGUIController {
 		}
 	}
 
-
-
-
+	/*
+	 * Connect to server and start thread.
+	 */
 	@FXML 
 	void initialize() throws IOException{
 				

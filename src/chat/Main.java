@@ -8,14 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-public class Main extends Application {
-	//TODO: Resizing issue 
-	
+public class Main extends Application {	
 	private static Stage stage;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//primaryStage.resizableProperty().set(false);
 			Main.stage = primaryStage;
 			Parent root = FXMLLoader.load(getClass().getResource("chatGUI.fxml"));
 			Scene scene = new Scene(root);

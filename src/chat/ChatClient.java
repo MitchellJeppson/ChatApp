@@ -23,30 +23,18 @@ public class ChatClient {
 	JTextField textField = new JTextField(40);
 	JTextArea messageArea = new JTextArea(8, 40);
 
-	/**
-	 * Constructs the client by laying out the GUI and registering a
-	 * listener with the textfield so that pressing Return in the
-	 * listener sends the textfield contents to the server.  Note
-	 * however that the textfield is initially NOT editable, and
-	 * only becomes editable AFTER the client receives the NAMEACCEPTED
-	 * message from the server.
+	/*
+	 * Initializes chat GUI
 	 */
 	public ChatClient() {
 
-		// Layout GUI
 		textField.setEditable(false);
 		messageArea.setEditable(false);
 		frame.getContentPane().add(textField, "North");
 		frame.getContentPane().add(new JScrollPane(messageArea), "Center");
 		frame.pack();
 
-		// Add Listeners
 		textField.addActionListener(new ActionListener() {
-			/**
-			 * Responds to pressing the enter key in the textfield by sending
-			 * the contents of the text field to the server.    Then clear
-			 * the text area in preparation for the next message.
-			 */
 			public void actionPerformed(ActionEvent e) {
 				out.println(textField.getText());
 				textField.setText("");
@@ -54,9 +42,7 @@ public class ChatClient {
 		});
 	}
 
-	/**
-	 * Prompt for and return the address of the server.
-	 */
+	
 	private String getServerAddress() {
 		return JOptionPane.showInputDialog(
 				frame,
@@ -65,9 +51,7 @@ public class ChatClient {
 				JOptionPane.QUESTION_MESSAGE);
 	}
 
-	/**
-	 * Prompt for and return the desired screen name.
-	 */
+	
 	private String getName() {
 		return JOptionPane.showInputDialog(
 				frame,
@@ -76,12 +60,10 @@ public class ChatClient {
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
-	/**
-	 * Connects to the server then enters the processing loop.
+	/*
+	 * Connects to server over ssl, loops over communication with server. 
 	 */
-	private void run() throws IOException {
-
-		// Make connection and initialize streams
+	private void runChatApp() throws IOException {
 		String serverAddress = getServerAddress();
 		
 		SSLSocketFactory sslFact = (SSLSocketFactory)SSLSocketFactory.getDefault();
@@ -106,15 +88,13 @@ public class ChatClient {
 		}
 	}
 
-	/**
-	 * Runs the client as an application with a closeable frame.
-	 */
+
 	public static void main(String[] args) throws Exception {
 		System.setProperty("https.protocols", "SSLv2Hello");
 
 		ChatClient client = new ChatClient();
 		client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		client.frame.setVisible(true);
-		client.run();
+		client.runChatApp();
 	}
 }
